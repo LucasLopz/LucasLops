@@ -10,9 +10,25 @@ typedef struct {
     char genero; //m, f, o
 } stAlumno;
 
-stLegajo cargaUnAlum();
-int CarArreAlum(stAlumno Alumnos[],int dim);
+typedef struct {
+     int legajo;
+     char nombreYapellido [30];
+     int edad;
+     int anio;
+//a帽o que cursa, recordar que no podemos utilizar la 帽 para definir variables
+} stAlumno2;
 
+stAlumno cargaUnAlumno();
+int CarArreAlum(stAlumno Alumnos[],int dim);
+void MostrarUnAlumno(stAlumno Alumno);
+void MostrarArregloAlumnos(stAlumno Alumnos[], int validos);
+void MostrarAlumnoMatricula(stAlumno Alumno[],int validos,int  Matricula);
+void OrdenarSelecMatri(stAlumno Alumnos[],int validos);
+int buscaPosMenorStrc(stAlumno Alumnos[], int v, int comienzo);
+void MostrAlumGene(stAlumno Alumno[],int Validos, char G);
+int CargarDatoNuvOrd(stAlumno Alumno[],int validos, int dim);
+int CarArreAlumCargado(stAlumno Alumnos[],int validos,int dim);
+int CantAlumGene(stAlumno Alumno[],int  validos,int G);
 
 int main()
 {
@@ -22,14 +38,14 @@ int main()
 
 
 ///------------------------------------------------------
-///Hacer una funci髇 que cargue un arreglo de alumnos, hasta que el usuario lo decida.
+///Hacer una funci贸n que cargue un arreglo de alumnos, hasta que el usuario lo decida.
 
-int CarArreAlum(stAlumno Alumnos[],int dim){
+int CarArreAlum(stAlumno Alumno[],int dim){
 char opcion=0;
     int i=0;
     while(i<dim && opcion!=ESC){
         system("cls");
-        Alumnos[i]=cargaUnAlumno();
+        Alumno[i] = cargaUnAlumno();
         i++;
         printf("\n ESC para salir o cualquier tecla para continuar... ");
         opcion=getch();
@@ -37,7 +53,7 @@ char opcion=0;
     return i;
 }
 
-stLegajo cargaUnAlum(){
+stAlumno cargaUnAlumno(){
     stAlumno Alumno;
 
     printf("\n Ingrese el Num de Matricula.......: ");
@@ -54,31 +70,31 @@ stLegajo cargaUnAlum(){
 }
 
 ///------------------------------------------------------------------------------------
-///Hacer una funci髇 que muestre un arreglo de alumnos por pantalla. Modularizar.
+///Hacer una funci贸n que muestre un arreglo de alumnos por pantalla. Modularizar.
 
 void MostrarUnAlumno(stAlumno Alumno){
-printf("\n============================Alumno =====================================", )
+printf("\n============================Alumno =====================================");
 printf("\n Matricula...............: %d", Alumno.matricula);
 printf("\n Nombre.............: %s", Alumno.nombre);
 printf("\n Genero..................: %c", Alumno.genero);
 printf("\n========================================================================");
 }
 
-void MostrarArregloAlumnos(stAlumno Alumnos, int validos){
+void MostrarArregloAlumnos(stAlumno Alumnos[], int validos){
     int i=0;
     for(i=0;i<validos;i++){
         MostrarUnAlumno(Alumnos[i]);
     }
 }
 ///-------------------------------------------------------------------------------------------------
-///Hacer una funci髇 que muestre por pantalla los datos de un alumno, conociendo su matr韈ula. Modularizar.
+///Hacer una funci贸n que muestre por pantalla los datos de un alumno, conociendo su matr铆cula. Modularizar.
 
-void MostrarAlumnoMatricula(stAlumno Alumno,int validos,int  Matricula){
+void MostrarAlumnoMatricula(stAlumno Alumno[],int validos,int  Matricula){
 int i=0;
 int flag=0;
-while(Alumno.matricula[i] != Matricula && Flag!=1){
-if(Alumno.matricula == Matricula){
-    Flag=1;
+while(Alumno[i].matricula != Matricula && flag!=1){
+if(Alumno[i].matricula == Matricula){
+    flag=1;
 }else{
 i++;
 }
@@ -88,34 +104,26 @@ if(flag==1){
 }
 }
 ///------------------------------------------------------------------------------------------------------------
-///Hacer una funci髇 que ordene el arreglo de alumnos por medio del m閠odo de selecci髇.
-///El criterio de ordenaci髇 es el n鷐ero de matr韈ula.
+///Hacer una funci贸n que ordene el arreglo de alumnos por medio del m茅todo de selecci贸n.
+///El criterio de ordenaci贸n es el n煤mero de matr铆cula.
 
-void OrdenarSelecMatri(stAlumno Alumno,int validos){
+void OrdenarSelecMatri(stAlumno Alumnos[],int validos){
     int posMenor=0;
-    char aux[20];
-    int AuxInt=0;
-    for(int i=0;i<v-1;i++){
-        posMenor = buscaPosMenorString(a, v, i);
-        strcpy(aux, Alumno.nombre[posMenor]);
-        strcpy(Alumno.nombre[posMenor], Alumno.nombre[i]);
-        strcpy(Alumno.nombre[i], aux);
+    stAlumno Auxiliar;
+    for(int i=0;i<validos-1;i++){
+        posMenor = buscaPosMenorStrc(Alumnos, validos, i);
 
-         strcpy(aux, Alumno.genero[posMenor]);
-        strcpy(Alumno.genero[posMenor], Alumno.genero[i]);
-        strcpy(Alumno.genero[i], aux);
-
-         AuxInt= Alumno.matricula[posMenor];
-        Alumno.matricula[posMenor]= Alumno.matricula[i];
-       Alumno.matricula[i]= AuxInt;
+         Auxiliar= Alumnos[posMenor];
+        Alumnos[posMenor]= Alumnos[i];
+       Alumnos[i]= Auxiliar;
     }
 }
-int buscaPosMenorString(char a[][20], int v, int comienzo){
+int buscaPosMenorStrc(stAlumno Alumnos[], int v, int comienzo){
     int i = comienzo;
     int posMenor = i;
     i++;
     while(i<v){
-        if(strcmp(a[i],a[posMenor])<0){
+        if(Alumnos[i].matricula == Alumnos[posMenor].matricula){
             posMenor = i;
         }
         i++;
@@ -124,27 +132,27 @@ int buscaPosMenorString(char a[][20], int v, int comienzo){
 }
 
 ///--------------------------------------------------------------------------------
-///Hacer una funci髇 que muestre por pantalla los datos de los estudiantes de un g閚ero determinado
-///(se env韆 por par醡etro). Modularizar.
+///Hacer una funci贸n que muestre por pantalla los datos de los estudiantes de un g茅nero determinado
+///(se env铆a por par谩metro). Modularizar.
 
-void MostrAlumGene(stAlumno Alumno,int Validos, char G){
+void MostrAlumGene(stAlumno Alumno[],int Validos, char G){
 int i=0;
 
 for(i=0;i<Validos;i++){
-    if(Alumno.genero[i]== G){
-        MostrarUnAlumno(Alumno[i])
+    if(Alumno[i].genero== G){
+        MostrarUnAlumno(Alumno[i]);
     }
 }
 }
 
 
 ///----------------------------------------------------------------------------------
-///Hacer una funci髇 que inserte en un arreglo ordenado por matr韈ula un nuevo dato, conservando el orden.
+///Hacer una funci贸n que inserte en un arreglo ordenado por matr铆cula un nuevo dato, conservando el orden.
 
-int CargarDatoNuvOrd(stAlumno Alumno,int validos, int dim){
+int CargarDatoNuvOrd(stAlumno Alumno[],int validos, int dim){
 
-validos= validos + CarArreAlumCargado(stAlumno Alumnos[],validos,dim);
-OrdenarSelecMatri(stAlumno Alumno,validos);
+validos= validos + CarArreAlumCargado(Alumno,validos,dim);
+OrdenarSelecMatri(Alumno,validos);
 return validos;
 }
 
@@ -162,14 +170,15 @@ char opcion=0;
 }
 
 ///--------------------------------------------------------------------------------------------------
-///Hacer una funci髇 que cuente y retorne la cantidad de estudiantes de un g閚ero determinado
-/// (se env韆 por par醡etro) que tiene un arreglo de alumnos.
+///Hacer una funci贸n que cuente y retorne la cantidad de estudiantes de un g茅nero determinado
+/// (se env铆a por par谩metro) que tiene un arreglo de alumnos.
 
-int CantAlumGene(stAlumno Alumno,int  validos,int G){
+int CantAlumGene(stAlumno Alumno[],int  validos,int G){
  int cont=0;
+ int i=0;
 
-for(i=0;i<Validos;i++){
-    if(Alumno.genero[i]== G){
+for(i=0;i<validos;i++){
+    if(Alumno[i].genero == G){
 cont++;
 }
 }
@@ -179,6 +188,68 @@ return cont;
 ///==================================================================================================
 ///====================================TP de ARCHIVOS================================================
 ///==================================================================================================
+///---------------------------------------------------------------------------------------------------
 
 
+void cargaArchivoAlumnos(char nombreArchivo[]){
+    char opcion=0;
+    stAlumno2 Alumno;
+    FILE* archi = fopen(nombreArchivo, "ab");
+    if(archi){
+        while(opcion!=27){
+            Alumno = cargaUnAlumno();
+            fwrite(&Alumno, sizeof(stAlumno2), 1, archi);
+            printf("\n ESC para salir o cualquier tecla para continuar... ");
+            opcion=getch();
+        }
+
+        fclose(archi);
+    }
+}
+
+void muestraArchivoDeAlumnos(char nombreArchivo[]){
+    stAlumno2 Alumno;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(fread(&Alumno, sizeof(stAlumno2), 1, archi)>0){
+           MostrarUnAlumno(Alumno);
+        }
+        fclose(archi);
+    }
+}
+///-----------------------------------------------------------------------------------------------
+int cuentaDatosArchivo(char nombreArchivo[]){
+    int cont=0;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        fseek(archi,0,SEEK_END);
+        cont = ftell(archi)/sizeof(stAlumno2);
+        fclose(archi);
+    }
+    return cont;
+}
+///------------------------------------------------------------------------------------------------
+/*Crear una funci贸n que permita agregar de a un elemento al final del archivo. O sea, se debe abrir el archivo
+, se piden los datos (se llena una variable de tipo struct alumno), se escribe en el archivo y se cierra. */
+
+int AgregreAlumArchi(char nombreArchivo[], stAlumno2 Alumno[]){
+FILE* archi=fopen(nombreArchivo, "ab");
+if(archi){
+    fwrite(&Alumno, sizeof(stAlumno2), 1, archi);
+    fclose(archi);
+}
+}
+///------------------------------------------------------------------------------------------------
+///Crear una funci贸n que pase a una pila los n煤meros de legajo de los alumnos mayores de edad.
+
+void PasaAPila (char nombreArchivo[], Pila* p, stAlumno2 Alumno[],int validos){
+FILE* archi=fopen(nombreArchivo, "rb");
+int i=0;
+if(archi){
+    for(i=0;i<validos;i++)
+    if(Alumno[i].edad >= 18){
+    apilar(p, Alumno[i].legajos);
+    }
+}
+}
 
