@@ -1,0 +1,34 @@
+
+001/000/000 - IDs (Primeros 3= Cliente, 2dos 3 Cuenta, 3ro 3= Transaccion)
+
+
+Alta: - Cliente
+- Cuenta
+- Moviento
+
+Borrar=- Cliente
+- Cuenta
+- Moviento
+
+
+modificar= - Cliente(Que cliente) - Que quiere modificar - La modificacion
+- Cuenta (Que cliente, Que cuenta, Que quiere modificar)
+- Moviento( Que cuenta, Que cliente,Que movimiento, Que Quiere modificar
+
+
+Listado= Clientes -Todos
+                  - Activos
+                 - Inactivos
+         cuentas -Todos
+                  - Activos
+                 - Inactivos
+         Movimientos - Cuentas
+
+Consulta: Cliente
+Cuenta
+Movimientos
+
+
+
+- [00/00/00] ¬ Cliente(Cuenta) Monto A Cliente(Cuenta) - MOTIVO - IDMovimiento
+                  
