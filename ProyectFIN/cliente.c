@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <math.h>
+#include <string.h>
 
 
 typedef struct {
-int id; /// campo único y autoincremental
+int id; /// campo Ãºnico y autoincremental
 int nroCliente;
 char nombre[30];
 char apellido[30];
@@ -13,7 +14,7 @@ char dni[10];
 char email[30];
 char domicilio[45];
 char telefono[12];
-int eliminado; /// 0 si está activo - 1 si está eliminado
+int eliminado; /// 0 si estÃ¡ activo - 1 si estÃ¡ eliminado
 }stCliente
 
 void EliminarCliente(stCliente Cliente);
@@ -35,21 +36,32 @@ void MostrarTodoClientInactiv (stCliente Clientes[],int validos);
 void MostrarTodoClientActiv (stCliente Clientes[],int validos);
 void MostrarTodoClient (stCliente Clientes[],int validos);
 void MostrarUnCliente(stCliente Cliente);
+int ValidacionDatosDni(stCliente Cliente[],char Dato[20],int validos);
+int ValidacionDatosTel(stCliente Cliente[],char Dato[20],int validos);
+int ValidacionDatosEmail(stCliente Cliente[],char Dato[20],int validos);
+int ValidosdeGmail(char Gmail[]);
+int ValidosdeYahoo(char Yahoo[]);
+int ValidosdeHotmail(char Hotmail[]);
+int ValidGeneMails(char email[]);
 stCliente AltaDeCliente();
 
 
 
 stCliente AltaDeCliente(){
 stCliente Cliente;
+char Aux[30];
+int MailValido=0;
 
 File* archi=fopen(nombreArchivo, "a+b");
 if(archi){
+ char opcion=0;
+
         fseek(archi,0,0)
     if(fread(&Cliente,sizeof(stCliente),1,archi)>0){
 
      Cliente.id=001000000;
     Cliente.nroCliente=1;
-
+do{
 printf("\n Ingrese el Nombre...................: ");
     fflush(stdin);
     gets(Cliente.nombre);
@@ -61,7 +73,13 @@ printf("\n Ingrese el DNI......................: ");
     gets(Cliente.dni);
 printf("\n Ingrese el Email....................: ");
     fflush(stdin);
-    gets(Cliente.email);
+    gets(Aux);
+    if((ValidGeneMails(Aux)=0)){
+    while(ValidGeneMails(Aux)=0){
+        printf("Mail Invalido, Ingrese nuevo mail");
+        fflush(stdin);
+        gets(Aux);
+    }}
 printf("\n Ingrese el Domicilio................: ");
     fflush(stdin);
     gets(Cliente.domicilio);
@@ -70,11 +88,23 @@ printf("\n Ingrese el telefono.................: ");
     gets(Cliente.telefono);
 
     Cliente.eliminado=0;
+    system("cls");
+    MostrarUnCliente(Cliente);
+    printf("Estan correctos los datos ingresados?\n");
+    printf("Presione S para continuar...");
+    fflush(stdin);
+    opcion=getch();
+
+    }while(opcion=! 83 || opcion=! 115 );
+
+
+
     }else{
         fseek(archi,-1*sizeof(stCliente),2);
     fread(&Cliente,sizeof(stCliente),1,archi);
 Cliente.id= Cliente.id + 1000000;
 Cliente.nroCliente++;
+do{
 printf("\n Ingrese el Nombre...................: ");
     fflush(stdin);
     gets(Cliente.nombre);
@@ -83,22 +113,73 @@ printf("\n Ingrese el Apellido.................: ");
     gets(Cliente.apellido);
 printf("\n Ingrese el DNI......................: ");
     fflush(stdin);
-    gets(Cliente.dni);
+    gets(Aux);
+    if(ValidacionDatosDni(Cliente.dni,Aux,Cliente.id/1000000)=1){
+ while(ValidacionDatosDni(Cliente.dni,Aux,Cliente.id/1000000)=1){
+    printf("Ingrese un DNI valido");
+     fflush(stdin);
+    gets(Aux);
+    }
+    }
+    strcpy(Cliente.dni, Aux);
+
+
+
 printf("\n Ingrese el Email....................: ");
     fflush(stdin);
-    gets(Cliente.email);
+    gets(Aux);
+ while(MailValido==0){
+
+    if((ValidGeneMails(Aux)=0)){
+    while(ValidGeneMails(Aux)=0){
+        printf("Mail Invalido, Ingrese nuevo mail");
+         fflush(stdin);
+        gets(Aux);
+    }
+    }
+
+
+    if(ValidacionDatosEmail(Cliente.email,Aux,Cliente.id/1000000)=1){
+ while(ValidacionDatosEmail(Cliente.email,Aux,Cliente.id/1000000)=1){
+    printf("Mail ya existente, Ingrese otro");
+     fflush(stdin);
+    gets(Aux);
+    }
+    }
+ }
+
+    strcpy(Cliente.email, Aux);
 printf("\n Ingrese el Domicilio................: ");
     fflush(stdin);
     gets(Cliente.domicilio);
 printf("\n Ingrese el telefono.................: ");
-    fflush(stdin);
-    gets(Cliente.telefono);
+   fflush(stdin);
+    gets(Aux);
+    if(ValidacionDatosTel(Cliente.telefono,Aux,Cliente.id/1000000)=1){
+ while(ValidacionDatosTel(Cliente.telefono,Aux,Cliente.id/1000000)=1){
+    printf("Ingrese un Telefono valido");
+     fflush(stdin);
+    gets(Aux);
+    }
+    }
 
-    Cliente.eliminado=0;
+    if(ValidacionDatosTel(Cliente.telefono,Aux,Cliente.id/1000000)=0){
+    strcpy(Cliente.telefono, Aux);
+    MailValido=1;
+    }
+     Cliente.eliminado=0;
+     system("cls");
+    MostrarUnCliente(Cliente);
+    printf("Estan correctos los datos ingresados?\n");
+    printf("Presione S para continuar...");
+    fflush(stdin);
+    opcion=getch();
+}while(opcion=! 83 || opcion=! 115 );
+    }
+
     fwrite(&Cliente,sizeof(stCliente),1,archi);
     }
-fclose(archi)
-}
+fclose(archi);
 }
 
 void MostrarUnCliente(stCliente Cliente){
@@ -296,3 +377,136 @@ if(opcion== 83 || opcion== 115){
  Cliente.eliminado=1;
 }
 }
+
+
+int ValidacionDatosDni(stCliente Cliente[],char Dato[20],int validos){
+int flag=0;
+int i=0;
+while(i<validos && flag!=1){
+    if(strcmp(Dato, Cliente.dni[i])= 0){
+     flag=1
+    }else{
+    i++;
+    }
+}
+return flag;
+}
+int ValidacionDatosEmail(stCliente Cliente[],char Dato[20],int validos){
+int flag=0;
+int i=0;
+while(i<validos && flag!=1){
+    if(strcmp(Dato, Cliente.email[i])= 0){
+     flag=1
+    }else{
+    i++;
+    }
+}
+return flag;
+}
+
+
+int ValidacionDatosTel(stCliente Cliente[],char Dato[20],int validos){
+int flag=0;
+int i=0;
+while(i<validos && flag!=1){
+    if(strcmp(Dato, Cliente.telefono[i])= 0){
+     flag=1
+    }else{
+    i++;
+    }
+}
+return flag;
+}
+
+
+int ValidosdeGmail(char Gmail[]){
+char gmail[10];
+strcpy(gmail,"@gmail.com");
+int flag=0;
+int contador=0;
+int contadorgmail=10;
+int i=0;
+while(Cliente.email(i)!= '\0'){
+contador++;
+i++;
+}
+i= contador-10;
+while(i!=contador && flag ==0){
+
+if(Cliente.email[contador]== Gmail[contadorgmail]){
+contador--;
+contadorgmail--;
+}else{
+flag=1;
+}
+}
+return flag;
+}
+
+int ValidosdeYahoo(char Yahoo[]){
+char Yahoo[10];
+strcpy(Yahoo,"@yahoo.com");
+int flag=0;
+int contador=0;
+int contadorYahoo=10;
+int i=0;
+while(Cliente.email(i)!= '\0'){
+contador++;
+i++;
+}
+i= contador-10;
+while(i!=contador && flag ==0){
+
+if(Cliente.email[contador]== Yahoo[contadorYahoo]){
+contador--;
+contadorYahoo--;
+}else{
+flag=1;
+}
+}
+return flag;
+}
+
+
+
+int ValidosdeHotmail(char Hotmail[]){
+char Hotmail[10];
+strcpy(Hotmail,"@hotmail.com");
+int flag=0;
+int contador=0;
+int contadorhot=10;
+int i=0;
+while(Cliente.email(i)!= '\0'){
+contador++;
+i++;
+}
+i=contador-10;
+while(i!=contador && flag ==0){
+
+if(Cliente.email[contador]== Hotmail[contadohot]){
+contador--;
+contadorhot--;
+}else{
+flag=1;
+}
+}
+return flag;
+}
+
+int ValidGeneMails(char email[]){
+int flag=0;
+
+if(ValidosdeGmail(email)=0){
+    flag=1;
+}else{
+if(ValidosdeYahoo(email)=0){
+    flag=1;
+}else{
+if(ValidosdeHotmail(email)=0}{
+   flag=1;
+   }
+}
+
+return flag;
+}
+
