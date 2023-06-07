@@ -43,11 +43,11 @@ int ValidosdeGmail(char Gmail[]);
 int ValidosdeYahoo(char Yahoo[]);
 int ValidosdeHotmail(char Hotmail[]);
 int ValidGeneMails(char email[]);
-stCliente AltaDeCliente();
+stCliente AltaDeCliente(char nombreArchivo[]);
 
 
 
-stCliente AltaDeCliente(){
+stCliente AltaDeCliente(char nombreArchivo[]){
 stCliente Cliente;
 char Aux[30];
 int MailValido=0;
@@ -191,7 +191,7 @@ printf("\n DNI...................: %s", Cliente.dni);
 printf("\n Email.................: %s", Cliente.email);
 printf("\n Domicilio.............: %s", Cliente.domicilio);
 printf("\n Telefono..............: %s", Cliente.telefono);
-printf("\n Estado del Cliente....: ")
+printf("\n Estado del Cliente....: ");
 if(Cliente.eliminado == 0){
     printf("Cliente Activo");
 }else{
@@ -509,4 +509,3 @@ if(ValidosdeHotmail(email)=0}{
 
 return flag;
 }
-
