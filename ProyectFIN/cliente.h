@@ -2,7 +2,7 @@
 #define CLIENTE_H_INCLUDED
 
 typedef struct {
-int id; /// campo único y autoincremental
+int id; /// campo Ãºnico y autoincremental
 int nroCliente;
 char nombre[30];
 char apellido[30];
@@ -10,7 +10,7 @@ char dni[10];
 char email[30];
 char domicilio[45];
 char telefono[12];
-int eliminado; /// 0 si está activo - 1 si está eliminado
+int eliminado; /// 0 si estÃ¡ activo - 1 si estÃ¡ eliminado
 }stCliente
 
 void EliminarCliente(stCliente Cliente);
@@ -32,7 +32,15 @@ void MostrarTodoClientInactiv (stCliente Clientes[],int validos);
 void MostrarTodoClientActiv (stCliente Clientes[],int validos);
 void MostrarTodoClient (stCliente Clientes[],int validos);
 void MostrarUnCliente(stCliente Cliente);
+int ValidacionDatosDni(stCliente Cliente[],char Dato[20],int validos);
+int ValidacionDatosTel(stCliente Cliente[],char Dato[20],int validos);
+int ValidacionDatosEmail(stCliente Cliente[],char Dato[20],int validos);
+int ValidosdeGmail(char Gmail[]);
+int ValidosdeYahoo(char Yahoo[]);
+int ValidosdeHotmail(char Hotmail[]);
+int ValidGeneMails(char email[]);
 stCliente AltaDeCliente();
+
 
 
 #endif // CLIENTE_H_INCLUDED
