@@ -299,7 +299,6 @@ for(i=0;i<validos;i++){
 
 void CambiarNombCli(stCliente Clientes[], int validos,char nombre[30]){
 int i=0;
-char cambio[30];
 for(i=0;i<validos;i++){
     if(Clientes[i].nombre == nombre){
             printf("Ingrese el nuevo nombre: ");
@@ -311,7 +310,6 @@ for(i=0;i<validos;i++){
 
 void CambiarApellCli(stCliente Clientes[], int validos,char apellido[30]){
 int i=0;
-char cambio[30];
 for(i=0;i<validos;i++){
     if(Clientes[i].apellido == apellido){
             printf("Ingrese el nuevo Apellido: ");
@@ -323,7 +321,6 @@ for(i=0;i<validos;i++){
 
 void CambiarDniCli(stCliente Clientes[], int validos,char dni[30]){
 int i=0;
-char cambio[30];
 for(i=0;i<validos;i++){
     if(Clientes[i].dni == dni){
             printf("Ingrese el nuevo DNI: ");
@@ -335,7 +332,6 @@ for(i=0;i<validos;i++){
 
 void CambiarEmCli(stCliente Clientes[], int validos,char email[30]){
 int i=0;
-char cambio[30];
 for(i=0;i<validos;i++){
     if(Clientes[i].email == email){
             printf("Ingrese el nuevo Email: ");
@@ -347,7 +343,6 @@ for(i=0;i<validos;i++){
 
 void CambiarDomCli(stCliente Clientes[], int validos,char domicilio[30]){
 int i=0;
-char cambio[30];
 for(i=0;i<validos;i++){
     if(Clientes[i].domicilio == domicilio){
             printf("Ingrese el nuevo Domicilio: ");
@@ -358,7 +353,6 @@ for(i=0;i<validos;i++){
 }
 void CambiarTelCli(stCliente Clientes[], int validos,char telefono[30]){
 int i=0;
-char cambio[30];
 for(i=0;i<validos;i++){
     if(Clientes[i].telefono == telefono){
             printf("Ingrese el nuevo Telefono: ");
@@ -502,10 +496,10 @@ if(ValidosdeGmail(email)=0){
 if(ValidosdeYahoo(email)=0){
     flag=1;
 }else{
-if(ValidosdeHotmail(email)=0}{
+if(ValidosdeHotmail(email)=0{
    flag=1;
    }
 }
-
+}
 return flag;
 }
