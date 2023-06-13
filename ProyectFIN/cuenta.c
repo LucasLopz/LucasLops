@@ -69,7 +69,7 @@ default:
     Continuar=getch();
 }while(Continuar=! 83 || Continuar=! 115 );
     Cuenta.eliminado=0;
-
+  fwrite(&Cuenta, sizeof(stCuenta),1,archi);
 }else{
 
     int flag=0;
@@ -114,6 +114,7 @@ default:
 }while(Continuar=! 83 || Continuar=! 115 );
     Cuenta.eliminado=0;
 
+fwrite(&Cuenta, sizeof(stCuenta),1,archi);
 
     }else{
     fseek(archi,-1*sizeof(stCuenta),2);
@@ -162,9 +163,10 @@ default:
     Continuar=getch();
 }while(Continuar=! 83 || Continuar=! 115 );
     Cuenta.eliminado=0;
+    fwrite(&Cuenta, sizeof(stCuenta),1,archi);
     }
 }
-    }
+   fclose(archi); }
 }
 
 
@@ -181,11 +183,11 @@ printf("\n============================== Cuenta %d =============================
 printf("\n ID Cliente.....................: %d", Cuenta.idCliente);
 printf("\n Tipo de Cuenta.................: %d", Cuenta.tipoDeCuenta);
 printf("\n Costo Mensual..................: $ %f", Cuenta.costoMensual);
-printf("\n Estado del Cliente.............: ")
+printf("\n Estado de la cuenta.............: ")
 if(Cuenta.eliminado == 0){
-    printf("Cliente Activo");
+    printf("Cuenta Activo");
 }else{
-  printf("Cliente Inactivo");
+  printf("Cuenta Inactivo");
 }
 printf("\n=======================================================================");
 }
@@ -233,13 +235,89 @@ for(i=0;i<validos;i++){
 }
 }
 
-void EliminarCuenta(stCuenta Cuenta){
-char opcion=0;
-printf("\n Esta seguro de querer eliminar el Cliente?....");
-printf("\n Presiona S para continuar....");
-opcion=getch()
-if(opcion== 83 || opcion== 115){
- Cliente.eliminado=1;
+void MostrarCuentaTipo(stCuenta Cuentas[],int validos,int TipoCuent){
+int i=0;
+for(i=0;i<validos;i++){
+        if(Cuenta[i].tipoDeCuenta == TipoCuent){
+ MostrarUnaCuenta(Cuenta[i]);
+}
 }
 }
 
+
+
+void EliminarCuenta(stCuenta Cuenta){
+char opcion=0;
+printf("\n Esta seguro de querer eliminar el Cuenta?....");
+printf("\n Presiona S para continuar....");
+opcion=getch()
+if(opcion== 83 || opcion== 115){
+ Cuenta.eliminado=1;
+}
+}
+
+
+void CambiarIDCli(stCliente Cuentas){
+            printf("Ingrese el nuevo id del Cliente: ");
+            fflush(stdin);
+    gets(Cuentas.idCliente);
+    }
+void CambiarnroCuent(stCliente Cuenta){
+
+            printf("Ingrese el nuevo nro de Cuenta: ");
+            fflush(stdin);
+    gets(Cuentas[i].nroCliente);
+    }
+
+void CambiartipoCuenta(stCliente Cuentas){
+printf("Ingrese el nuevo tipo de cuenta: ");
+            TipoCuent();
+    scanf("%d",&opcion);
+    switch(opcion){
+
+case 1:
+    Cuenta.tipoDeCuenta=1;
+    Cuenta.costoMensual= 500;
+
+break;
+case 2:
+    Cuenta.tipoDeCuenta=2;
+    Cuenta.costoMensual= 600;
+    break;
+case 3:
+    Cuenta.tipoDeCuenta=3;
+    Cuenta.costoMensual= 100;
+    break;
+default:
+    printf("Opcion Invalida");
+    break;
+
+    }
+    }}}
+
+void CambiarTodoCuenta(stCuenta Cuentas[], int validos, int idCuenta) {
+int i=0;
+for(i=0;i<validos;i++){
+    if(Cuentas[i].id == idCuenta){
+int opcion=0;
+printf("Seleccione lo que quiere cambiar: \n")
+printf("1-............... id del cliente \n");
+printf("2-............. Numero de cuenta \n");
+printf("3-............... Tipo de cuenta \n");
+scanf("%d",&opcion);
+
+switch(opcion){
+case 1:
+    CambiarIDCli(Cuenta[i]);
+    break
+    case 2:
+    CambiarnroCuent(Cuenta[i]);
+    break
+    case 3:
+    CambiartipoCuenta(Cuenta[i]);
+    break
+    case default:
+        printf("Opcion Invalida");
+
+}
+}
