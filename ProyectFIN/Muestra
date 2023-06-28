@@ -1,0 +1,72 @@
+void milMovimientos(char nombreArchivo[],char archivoCuentas[])/// no anda
+{
+    srand(time(NULL));
+    FILE *archi=fopen(nombreArchivo,"a+b");
+    if(archi)
+    {
+        for(int i=0;i<1000;i++)
+        {
+            cargaaletoriadatos(nombreArchivo,archivoCuentas);
+        }
+        fclose(archi);
+    }
+
+
+}
+void cargaaletoriadatos(char nombreArchivo[],char archivoCuentas[])
+{
+    srand(time(NULL));
+    stMovimiento mov;
+    int id;
+    int idCuenta;
+    int IdAux=0;
+    float importe=0;
+    int minanio =2000;
+    int maxanio =2023;
+    int rangoanio =maxanio - minanio +1;
+    int minmes=1;
+    int maxmes=12;
+    int rangomes=maxmes - minmes;
+    int mindias=1;
+    int maxdias=30;
+    int rangodias=maxdias - mindias;
+
+    if(crearIdCuenta(archivoCuentas)!=0){
+        IdAux= crearIdCuenta(archivoCuentas)-1;
+    }else{
+    IdAux=1;
+    }
+    int minidCuenta=1;
+    int maxidCuenta= IdAux;
+    int rangoidCuenta= maxidCuenta - minidCuenta;
+
+
+    FILE* archi=fopen(nombreArchivo, "a+b");
+
+    if (archi)
+    {
+         id=crearIdMovimiento(nombreArchivo);
+
+                mov.id=id;
+
+                mov.idcuenta= rand()% rangoidCuenta + minidCuenta;
+
+                mov.anio=rand()% rangoanio +minanio;
+
+                mov.mes=rand()%rangomes;
+
+                mov.dia=rand()%rangodias;
+
+                importe=rand()%100000 - 50000;
+                obtenerDetalle(mov.detalle,importe);
+
+                mov.importe=importe;
+
+                mov.eliminado=0;
+                fwrite(&mov,sizeof(stMovimiento),1,archi);
+
+fclose(archi);
+    }
+
+
+}
