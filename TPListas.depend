@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1584205420 source:d:\tpslls\tplistas\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1693873715 source:d:\tpslls\tplistas\cliente.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<math.h>
+	<string.h>
+
