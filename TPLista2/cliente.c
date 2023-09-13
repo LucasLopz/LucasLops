@@ -6,15 +6,11 @@
 
 
 typedef struct {
-int id; /// campo único y autoincremental
+int id; /// campo Ãºnico y autoincremental
 int nroCliente;
 char nombre[30];
 char apellido[30];
 char dni[10];
-char email[30];
-char domicilio[45];
-char telefono[12];
-int eliminado; /// 0 si está activo - 1 si está eliminado
 }stCliente;
 
 
@@ -48,17 +44,6 @@ printf("\n Ingrese el Apellido.................: ");
 printf("\n Ingrese el DNI......................: ");
     fflush(stdin);
     gets(Cliente.dni);
-printf("\n Ingrese el Email....................: ");
-    fflush(stdin);
-    gets(Aux);
-printf("\n Ingrese el Domicilio................: ");
-    fflush(stdin);
-    gets(Cliente.domicilio);
-printf("\n Ingrese el telefono.................: ");
-    fflush(stdin);
-    gets(Cliente.telefono);
-
-    Cliente.eliminado=0;
     system("cls");
     MostrarUnCliente(Cliente);
     printf("Estan correctos los datos ingresados?\n");
@@ -85,17 +70,6 @@ printf("\n Ingrese el Apellido.................: ");
 printf("\n Ingrese el DNI......................: ");
     fflush(stdin);
     gets(Aux);
-printf("\n Ingrese el Email....................: ");
-    fflush(stdin);
-    gets(Aux);
-printf("\n Ingrese el Domicilio................: ");
-    fflush(stdin);
-    gets(Cliente.domicilio);
-printf("\n Ingrese el telefono.................: ");
-   fflush(stdin);
-    gets(Aux);
-     Cliente.eliminado=0;
-     system("cls");
     MostrarUnCliente(Cliente);
     printf("Estan correctos los datos ingresados?\n");
     printf("Presione S para continuar...");
@@ -115,15 +89,8 @@ printf("\n Nro Cliente...........: %d", Cliente.nroCliente);
 printf("\n Nombre................: %s", Cliente.nombre);
 printf("\n Apellido..............: %s", Cliente.apellido);
 printf("\n DNI...................: %s", Cliente.dni);
-printf("\n Email.................: %s", Cliente.email);
-printf("\n Domicilio.............: %s", Cliente.domicilio);
-printf("\n Telefono..............: %s", Cliente.telefono);
-printf("\n Estado del Cliente....: ");
-if(Cliente.eliminado == 0){
-    printf("Cliente Activo");
-}else{
-  printf("Cliente Inactivo");
-}
+
 printf("\n=====================================================================");
 }
+
 
